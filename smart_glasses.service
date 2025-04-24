@@ -1,0 +1,14 @@
+[Unit]
+Description=Smart Glasses System
+After=multi-user.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/james/Brain/asu/FSE 100/smartglasses/smartglasses
+ExecStart=/usr/bin/python3 /home/james/Brain/asu/FSE 100/smartglasses/smartglasses/smart_glasses.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target 

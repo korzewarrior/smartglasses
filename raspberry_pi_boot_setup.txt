@@ -1,0 +1,51 @@
+## Setting up smart_glasses.py to run on Raspberry Pi boot
+
+Follow these steps on your Raspberry Pi:
+
+1. Copy the service file to systemd directory:
+   ```
+   sudo cp smart_glasses.service /etc/systemd/system/
+   ```
+
+2. Make sure the script is executable:
+   ```
+   chmod +x /home/james/Brain/asu/FSE 100/smartglasses/smartglasses/smart_glasses.py
+   ```
+
+3. Update the service file paths if needed:
+   - Edit the service file with `sudo nano /etc/systemd/system/smart_glasses.service`
+   - Make sure the User, WorkingDirectory, and ExecStart paths are correct for your Pi
+   - The User should be the username you use on your Pi (likely "pi" or another username)
+   - Save with Ctrl+O, then exit with Ctrl+X
+
+4. Reload systemd to recognize the new service:
+   ```
+   sudo systemctl daemon-reload
+   ```
+
+5. Enable the service to start on boot:
+   ```
+   sudo systemctl enable smart_glasses.service
+   ```
+
+6. Start the service now (optional, to test):
+   ```
+   sudo systemctl start smart_glasses.service
+   ```
+
+7. Check service status:
+   ```
+   sudo systemctl status smart_glasses.service
+   ```
+
+8. If there are any issues, check the logs:
+   ```
+   sudo journalctl -u smart_glasses.service
+   ```
+
+Note: Since the script uses GPIO pins, camera, and displays video with cv2.imshow(), you'll need to:
+1. Make sure your Pi is booting to desktop (not headless)
+2. You're logged in automatically to allow the GUI components to work
+3. The appropriate packages (RPi.GPIO, picamera2, OpenCV, etc.) are installed
+
+If the script needs to run without a display (headless), you should modify it to remove the cv2.imshow() parts. 
